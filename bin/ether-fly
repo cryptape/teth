@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+
+require 'ether-fly'
 require 'erb'
 
 ARGV << "--help" if ARGV.empty?
