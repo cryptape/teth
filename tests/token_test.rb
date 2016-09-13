@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'ethereum'
 require 'json'
 
-class ContractsTest < Minitest::Test
+class TokenTest < Minitest::Test
   include Ethereum
 
   def setup
