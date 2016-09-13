@@ -1,1 +1,1 @@
-gem 'ether-fly', '>= 0.0.1', path: '../'
+gem 'ether-fly', '>= 0.0.1'
