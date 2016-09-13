@@ -1,5 +1,5 @@
 PATH
-  remote: .
+  remote: ../
   specs:
     ether-fly (0.0.1)
       minitest (~> 5.8)
@@ -39,7 +39,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  ether-fly!
+  ether-fly (>= 0.0.1)!
 
 BUNDLED WITH
    1.12.5

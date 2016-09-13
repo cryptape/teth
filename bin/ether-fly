@@ -1,6 +1,5 @@
 #!/usr/bin/env ruby
 
-require 'ether-fly'
 require 'erb'
 
 ARGV << "--help" if ARGV.empty?
@@ -17,9 +16,9 @@ command = aliases[command] || command
 HELP_MESSAGE = <<-EOF
 Usage: eth-fly COMMAND [ARGS]
 The most common eth-fly commands are:
- generate    Generate new code (short-cut alias: "g")
+ generate    Generate new Smart Contract and test file (short-cut alias: "g")
  test        Run tests (short-cut alias: "t")
- new         Create a new Rails application. "eth-fly new my_app" creates a
+ new         Create a new Smart Contract application. "eth-fly new my_app" creates a
              new application called MyApp in "./my_app"
 All commands can be run with -h (or --help) for more information.
 EOF
@@ -47,6 +46,10 @@ class <%=name.capitalize%>Test < Minitest::Test
 end
 EOF
 
+GEMFILE_TEMPLATE = ERB.new <<-EOF
+gem 'ether-fly', '>= 0.0.1'
+EOF
+
 def run_command!(command)
   command = parse_command(command)
 
@@ -57,19 +60,40 @@ def run_command!(command)
   end
 end
 
+def new
+  name = ARGV.shift
+  if name
+    puts "Creating project #{name}..."
+    system("mkdir #{name}")
+    gemfile = GEMFILE_TEMPLATE.result(binding)
+    File.open("#{name}/Gemfile", "w+") {|f| f.write(gemfile) }
+    system("cd #{name} && mkdir contracts && mkdir tests && bundle install")
+    puts "You are flying..."
+  else
+    puts "Need project name"
+  end
+end
+
 def generate
   name = ARGV.shift
   if name
     contract = CONTRACT_TEMPLATE.result(binding)
-    File.open("./contracts/#{name.capitalize}.sol", "w+") {|f| f.write(contract) }
+    puts "Create #{name.capitalize}.sol contract file..."
+    File.open("contracts/#{name.capitalize}.sol", "w+") {|f| f.write(contract) }
     test = TEST_TEMPLATE.result(binding)
-    File.open("./tests/#{name.capitalize}_test.rb", "w+") {|f| f.write(test) }
+    puts "Create #{name}_test.rb test file..."
+    File.open("tests/#{name.capitalize}_test.rb", "w+") {|f| f.write(test) }
+    puts "You are flying..."
   else
     puts "Need contract name!"
   end
 end
 
 def test
+  name = ARGV.shift
+  puts "Test #{name.capitalize} contract..."
+  system("bundle exec ruby -Ilib:test tests/#{name}_test.rb")
+  puts "You are flying..."
 end
 
 def help
