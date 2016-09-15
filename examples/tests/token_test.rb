@@ -1,5 +1,4 @@
-require 'minitest/autorun'
-require 'teth'
+require 'teth/minitest'
 
 class TokenTest < Teth::Minitest
   def test_issue_balance
