@@ -12,8 +12,8 @@ contract Token {
     }
 
     function issue(address account, uint amount) {
-        log1(bytes32(msg.sender), bytes32('msg.sender'));
         log1(bytes32(issuer), bytes32('issuer'));
+        log1(bytes32(account), bytes32('receiver'));
         if (msg.sender != issuer) throw;
         balances[account] += amount;
         Issue(account, amount);
