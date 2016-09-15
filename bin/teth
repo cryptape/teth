@@ -2,10 +2,11 @@
 
 require 'erb'
 require 'json'
+require 'fileutils'
 
 ARGV << "--help" if ARGV.empty?
 
-aliases = {
+ALIASES = {
   "n"  => "new",
   "g"  => "generate",
   "t"  => "test",
@@ -19,7 +20,7 @@ aliases = {
 }
 
 command = ARGV.shift
-command = aliases[command] || command
+command = ALIASES[command] || command
 
 HELP_MESSAGE = <<-EOF
 Usage: teth COMMAND [ARGS]
@@ -32,295 +33,44 @@ The most common teth commands are:
   import_keys Import keys to chain (short-cut alias: "ik")
   build       Build contract (short-cut alias: "b")
   migrate     Deploy contract on chain (short-cut alias: "m")
-  server      Start chain (short-cut alias: "s")
+  server      Start chain server (short-cut alias: "s")
   console     Open Chain console (short-cut alias: "c")
   geth_test   Test on chain (short-cut alias: "gt")
 
 All commands can be run with -h (or --help) for more information.
 EOF
 
-COMMAND_WHITELIST = %w(new generate test init import_keys build migrate server console geth_test)
-
-CONTRACT_TEMPLATE = ERB.new <<-EOF
-contract <%= name.capitalize %> {
-}
-EOF
-
-TEST_TEMPLATE = ERB.new <<-EOF
-require 'minitest/autorun'
-require 'ethereum'
-require 'json'
-
-class <%=name.capitalize%>Test < Minitest::Test
-  include Ethereum
-
-  def setup
-    @state = Tester::State.new
-    @solidity_code = File.read('./contracts/<%= name.capitalize %>.sol')
-    @c = @state.abi_contract @solidity_code, language: :solidity
-  end
-end
-EOF
-
-GEMFILE_TEMPLATE = ERB.new <<-EOF
-gem 'teth', '>= 0.0.1'
-EOF
-
-GENESIS_TEMPLATE = <<-EOF
-{
-  "nonce": "0x0000000000000042",
-  "difficulty": "0x020000",
-  "mixhash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "coinbase": "0x0000000000000000000000000000000000000000",
-  "timestamp": "0x00",
-  "parentHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
-  "extraData": "0x11bbe8db4e347b4e8c937c1c8370e4b5ed33adb3db69cbdb7a38e1e50b1b82fa",
-  "gasLimit": "0x4c4b40"
-}
-EOF
-
 KEYS_TEMPLATE = {
   "3ae88fe370c39384fc16da2c9e768cf5d2495b48" => "095e53c9c20e23fd01eaad953c01da9e9d3ed9bebcfed8e5b2c2fce94037d963",
   "81063419f13cab5ac090cd8329d8fff9feead4a0" => "5bc505a123a695176a9688ffe22798cfd40424c5b91c818e985574ea8ebda167",
-  "9da26fc2e1d6ad9fdd46138906b0104ae68a65d8" => "b6a03207128827eaae0d31d97a7a6243de31f2baf99eabd764e33389ecf436fc",
-  "bd2d69e3e68e1ab3944a865b3e566ca5c48740da" => "b35b8064c5c373629a05cc3ef39789ba4dacd404e6e864214ade934c198b636f",
-  "ca9f427df31a1f5862968fad1fe98c0a9ee068c4" => "9e35c48588711469e13c9a594f9f6d81491ce44ff1e8c5d968fcbd17168088a4"
+  "9da26fc2e1d6ad9fdd46138906b0104ae68a65d8" => "b6a03207128827eaae0d31d97a7a6243de31f2baf99eabd764e33389ecf436fc"
 }
 
-SOLC_HELPER_TEMPLATE = %q{#!/usr/bin/env ruby
-
-require 'json'
-def library_code
-  'function create(abiDefinition) {  return web3.eth.contract(abiDefinition);}/*function deploy(account, value, gas, contract, code, input) */function deploy() {  var account = arguments[0];  var value = arguments[1];  var gas = arguments[2];  var contract = arguments[3];  var code = arguments[4];  var codeString = "contract.new(inputMarker,{from:\'accountMarker\', value: valueMarker,  data: \'codeMarker\', gas: gasMarker}, function (e, contract) {    if(!e) {      if(!contract.address) {        console.log(\"Contract transaction send: TransactionHash: \" + contract.transactionHash + \" waiting to be mined...\");      } else {        console.log(\"Contract mined! Address: \" + contract.address);      }    } else {      console.log(e)    }  })";  codeString = codeString.replace("accountMarker", account);  codeString = codeString.replace("valueMarker", value);  codeString = codeString.replace("codeMarker", code);  codeString = codeString.replace("gasMarker", gas);  input = "null";  if (arguments.length > 5) {    if (arguments[5] != null) {      var args = [];      for (var i = 5;i < arguments.length; i++) {        var val = arguments[i];        if (typeof(val) === \'string\') {          val = "\"" + val + "\"";        }        args.push(val);      }      input = args.join(",");    }  }  codeString = codeString.replace("inputMarker", input);  console.log(input);  var instance = eval(codeString);  return instance;}function watcher(error, result) {  if (!error) {    console.log("Result");    console.log(JSON.stringify(result));    return;  }  console.log("Error" + error);}/*function call(account, gas, func, input) */function call() {  var account = "eth.accounts["+arguments[0]+"]";  var gas = arguments[1];  var func = arguments[2];  input = "null";  if (arguments.length > 3) {    if (arguments[3] != null) {      var args = Array.prototype.slice.call(arguments, 3);      input = args.join(",");    }  }  codeString = "func.sendTransaction(inputMarker, gasMarker, {from:accountMarker}, watcher);";  codeString = codeString.replace("accountMarker",account);  codeString = codeString.replace("gasMarker",gas);  codeString = codeString.replace("inputMarker",input);  eval(codeString);}function send(from_index, to, value, gas){ return eth.sendTransaction({from:eth.accounts[from_index], to:to, value:web3.toWei(value,\'ether\'), gas:gas});}function bal() {  for (var i = 0; i < eth.accounts.length; i++) {    account = eth.accounts[i];    balance = web3.fromWei(eth.getBalance(eth.accounts[i]), \'ether\');    console.log("Index : " + i);    console.log("Account : "+ account);    console.log("Balance : "+ balance);    console.log("\n");  }}'
+def gem_dir
+  spec = Gem::Specification.find_by_name("teth")
+  spec.gem_dir
 end
-
-def compile_solidity(file)
-  json_string = `solc --add-std --optimize --combined-json abi,bin,userdoc,devdoc #{file}`
-  json_string = json_string.gsub("\\n","")
-  begin
-    json_object = JSON.parse(json_string)
-    throw if json_object.nil?
-    puts `solc --optimize --gas #{file}`
-    puts "\n\n"
-    puts "-------------------------------------"
-    json_object["contracts"]
-  rescue
-    puts "Failed to Compile."
-    abort
-  end
-end
-
-def process_code(contracts)
-  contracts.keys.each.with_index do |key, i|
-    contracts[key]["bin"] = "0x" + contracts[key]["bin"]
-    contracts[key]["abi"] = JSON.parse(contracts[key]["abi"])
-    contracts[key]["devdoc"] = JSON.parse(contracts[key]["devdoc"])
-    contracts[key]["userdoc"] = JSON.parse(contracts[key]["userdoc"])
-  end
-  return contracts
-end
-
-
-def javascript_file_name(file_name)
-  file_name = file_name.split('/')[-1]
-  file_name.split('.')[0] + '_compiled.js'
-end
-
-def get_contract_to_deploy(compiled_object)
-  return compiled_object.keys[0] if compiled_object.keys.count == 1
-  puts "Which contract do you want to deploy?"
-  choice = 0
-  while choice <= 0 || choice > compiled_object.keys.count
-    compiled_object.keys.each.with_index do |key, i|
-      puts "#{(i+1)}. "+key
-    end
-    choice = $stdin.gets.to_i
-  end
-  return compiled_object.keys[choice - 1]
-end
-
-def get_input
-  puts "Enter Input: "
-  input = $stdin.gets
-  input.strip.chomp == "" ? "null" : input
-end
-
-def get_gas
-  gas = 0
-  while gas == 0
-    puts "Enter Gas: "
-    gas = $stdin.gets.to_i
-  end
-  gas
-end
-
-def get_value
-  gas = -1
-  while gas < 0
-    puts "Enter Value To Be Transferred: "
-    gas = $stdin.gets.to_i
-  end
-  gas
-end
-
-file_name = ARGV[0]
-
-compiled_object = compile_solidity(file_name)
-compiled_object = process_code(compiled_object)
-javascript_file_name = javascript_file_name(file_name)
-
-current_contract = get_contract_to_deploy(compiled_object)
-
-compiled_variable_name = "#{current_contract}Compiled"
-contract_variable_name = "#{current_contract}Contract"
-contract_instance_variable_name = "#{current_contract}"
-
-gas = get_gas
-value = get_value
-input = get_input
-
-File.open(javascript_file_name, 'w') do |f|
-  f.write("#{library_code};\nvar #{compiled_variable_name} = #{compiled_object.to_json};")
-  f.write("#{contract_variable_name} = create(#{compiled_variable_name}.#{current_contract}.abi);")
-  f.write("#{contract_instance_variable_name} = deploy(eth.coinbase,#{value},#{gas},#{contract_variable_name},#{compiled_variable_name}.#{current_contract}.bin,#{input});")
-  f.write("console.log('Compiled Object : #{compiled_variable_name}');")
-  f.write("console.log('Contract : #{contract_variable_name}');")
-  f.write("console.log('Contract Instance : #{contract_instance_variable_name}');")
-end
-}
-
-ATTACH_SH = <<-EOF
-#!/bin/bash
-
-geth=${GETH:-geth}
-$geth attach ipc:data/geth.ipc
-EOF
-
-BUILD_SH = <<-EOF
-#!/bin/bash
-for sol in `find ./contracts -name '*.sol'`
-do
-  filename="${sol}"
-  echo $filename
-  let len=${#filename}-16
-  # echo $len
-  jsfile="${filename:12:len}_compiled.js"
-  echo $jsfile
-  ./bin/solc_helper.rb $sol $jsfile
-  mv $jsfile builds/
-done
-EOF
-
-IMPORT_KEYS_SH = <<-EOF
-#!/bin/sh
-
-geth=${GETH:-geth}
-echo "***** Using geth at: $geth"
-
-echo "***** Import all pre-funded private keys"
-
-for key in `find ./private_keys -name '*.key'`
-do
-  ./private_keys/import.sh $key $geth
-done
-
-echo "***** Done."
-EOF
-
-INIT_SH = <<-EOF
-#! /bin/bash
-geth --datadir `pwd`/data init genesis.json
-EOF
-
-PRIVATE_BLOCKCHAIN_SH = <<-EOF
-#!/bin/bash
-
-geth=${GETH:-geth}
-
-$geth --datadir data --networkid 31415926 --rpc --rpccorsdomain "*" --nodiscover --unlock 3ae88fe370c39384fc16da2c9e768cf5d2495b48 --password <(echo -n 123456)
-EOF
-
-TEST_SH = <<-EOF
-#!/bin/bash
-
-geth=${GETH:-geth}
-
-scripts=""
-
-for file in `find ./builds -name '*compiled.js'`
-do
-  scripts="${scripts};loadScript('$file')"
-done
-
-for file in `find ./test -name '*.js'`
-do
-  scripts="${scripts};loadScript('$file');"
-done
-
-echo $scripts
-$geth --datadir data --networkid 31415926 --rpc --rpccorsdomain "*" --nodiscover --unlock 3ae88fe370c39384fc16da2c9e768cf5d2495b48 --password <(echo -n 123456) --exec "$scripts" console 2>> ./logfile
-EOF
-
-IMPORT_SH = <<-EOF
-#!/usr/bin/expect -f
-
-set key [lindex $argv 0];
-set geth [lindex $argv 1];
-
-spawn $geth --datadir data account import $key
-expect "Passphrase:"
-send "123456\r"
-expect "Repeat Passphrase:"
-send "123456\r"
-interact
-EOF
-
-RAKE_FILE = <<-EOF
-require 'rake/testtask'
-
-Rake::TestTask.new do |t|
-  t.libs += %w(lib test)
-  t.test_files = FileList['tests/**/*_test.rb']
-  t.verbose = true
-end
-
-task default: [:test]
-EOF
 
 def new
   name = ARGV.shift
   if name
     puts "Creating project #{name}..."
-    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir contracts && mkdir bin && mkdir tests")
-    gemfile = GEMFILE_TEMPLATE.result(binding)
+    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir contracts && mkdir tests")
+
+    gemfile = File.open("#{gem_dir}/lib/teth/erbs/Gemfile")
 
     File.open("#{name}/Gemfile", "w+") {|f| f.write(gemfile) }
-    system("cd #{name} && mkdir contracts && mkdir tests && bundle install")
-
-    File.open("#{name}/Gemfile", "w+") { |f| f.write(gemfile) }
     system("cd #{name} && bundle install")
-    File.open("#{name}/genesis.json", "w+") { |f| f.write(GENESIS_TEMPLATE) }
 
     KEYS_TEMPLATE.each do |k, v|
       File.open("#{name}/private_keys/#{k}.key", "w+") { |f| f.write(v) }
     end
-    File.open("#{name}/rakefile", "w+") { |f| f.write(RAKE_FILE) }
 
-    File.open("#{name}/bin/attach.sh", "w+", 0777) { |f| f.write(ATTACH_SH) }
+    FileUtils.cp("#{gem_dir}/lib/teth/templates/private_keys/import.sh", "#{name}/private_keys/import.sh")
+    FileUtils.chmod 0700, "#{name}/private_keys/import.sh"
 
-    File.open("#{name}/bin/build.sh", "w+", 0777) { |f| f.write(BUILD_SH) }
-
-    File.open("#{name}/bin/import_keys.sh", "w+", 0777) { |f| f.write(IMPORT_KEYS_SH) }
-
-    File.open("#{name}/bin/init.sh", "w+", 0777) { |f| f.write(INIT_SH) }
-
-    File.open("#{name}/bin/private_blockchain.sh", "w+", 0777) { |f| f.write(PRIVATE_BLOCKCHAIN_SH) }
-
-    File.open("#{name}/bin/test.sh", "w+", 0777) { |f| f.write(TEST_SH) }
-
-    File.open("#{name}/private_keys/import.sh", "w+", 0777) { |f| f.write(IMPORT_SH) }
-
-    File.open("#{name}/bin/solc_helper.rb", "w+", 0777) { |f| f.write(SOLC_HELPER_TEMPLATE) }
+    FileUtils.cp_r("#{gem_dir}/lib/teth/templates/bin/", "#{name}")
+    FileUtils.chmod_R 0700, "#{name}/bin/"
     puts "Done."
   else
     puts "Need project name"
@@ -330,15 +80,18 @@ end
 def generate
   name = ARGV.shift
   if name
-    contract = CONTRACT_TEMPLATE.result(binding)
+    contract_template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/contract.sol")
+    contract = contract_template.result(binding)
     puts "Create #{name.capitalize}.sol contract file..."
     File.open("contracts/#{name.capitalize}.sol", "w+") { |f| f.write(contract) }
-    test = TEST_TEMPLATE.result(binding)
+
+    test_template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/contract_test.rb")
+    test = test_template.result(binding)
     puts "Create #{name}_test.rb test file..."
     File.open("tests/#{name.capitalize}_test.rb", "w+") {|f| f.write(test) }
     puts "Done."
   else
-    puts "Need contract name!"
+    puts "Need contract name"
   end
 end
 
@@ -401,7 +154,7 @@ end
 def run_command!(command)
   command = parse_command(command)
 
-  if COMMAND_WHITELIST.include?(command)
+  if ALIASES.values.include?(command)
     send(command)
   else
     help

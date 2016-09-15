@@ -1,0 +1,2 @@
+contract <%= name.capitalize %> {
+}
