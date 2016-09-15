@@ -7,18 +7,36 @@ module Teth
 
     class <<self
       def contract_dir_name(set_val=nil)
-        if set_val
-          @contract_dir_name = set_val
-        else
+        if set_val.nil?
           @contract_dir_name ||= 'contracts'
+        else
+          @contract_dir_name = set_val
         end
       end
 
       def account_num(set_val=nil)
-        if set_val
-          @account_num = set_val
-        else
+        if set_val.nil?
           @account_num ||= 10
+        else
+          @account_num = set_val
+        end
+      end
+
+      def print_events(set_val=nil)
+        if set_val.nil?
+          return true if @print_events.nil?
+          @print_events
+        else
+          @print_events = set_val
+        end
+      end
+
+      def print_logs(set_val=nil)
+        if set_val.nil?
+          return true if @print_logs.nil?
+          @print_logs
+        else
+          @print_logs = set_val
         end
       end
     end
@@ -38,12 +56,46 @@ module Teth
     def setup_contract(path)
       case path
       when /\.sol\z/
-        code = File.read path
-        @contract = state.abi_contract code, language: :solidity, sender: privkey
+        type = :solidity
       when /\.se\z/
         raise NotImplemented, "Serpent not supported yet"
       else
         raise "Unknown contract source type: #{path}"
+      end
+
+      code = File.read path
+      log_listener = ->(log) do
+        if log.instance_of?(Log) # unrecognized event
+          if self.class.print_logs
+            topics = log.topics.map {|t| heuristic_prettify Utils.int_to_big_endian(t) }
+            data = heuristic_prettify(log.data)
+            puts "[Log] #{Utils.encode_hex(log.address)} >>> topics=#{topics} data=#{data}"
+          end
+        else # user defined event
+          if self.class.print_logs && self.class.print_events
+            from = log.delete '_from'
+            name = log.delete '_event_type'
+            s = log.keys.map {|k| "#{k}=#{log[k]}" }.join(' ')
+            puts "[Event] #{from} #{name} >>> #{s}"
+          end
+        end
+      end
+      @contract = state.abi_contract code,
+        language: type, sender: privkey, log_listener: log_listener
+    end
+
+    def heuristic_prettify(bytes)
+      dry_bytes = bytes.gsub(/\A(\x00)+/, '')
+      dry_bytes = dry_bytes.gsub(/(\x00)+\z/, '')
+      if (bytes.size - dry_bytes.size) > 3
+        # there's many ZERO bytes in the head or tail of bytes, it must be padded
+        if dry_bytes.size == 20 # address
+          Utils.encode_hex(dry_bytes)
+        else
+          dry_bytes
+        end
+      else
+        Utils.encode_hex(bytes)
       end
     end
 
