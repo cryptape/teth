@@ -166,6 +166,20 @@ module Teth
       @addresses ||= privkeys.map {|k| PrivateKey.new(k).to_address }
     end
 
+    %w(alice bob carol chuck dave eve mallet oscar sybil).each_with_index do |n, i|
+      class_eval <<-METHOD
+      def #{n}
+        addresses[#{i}]
+      end
+      def #{n}_pubkey
+        pubkeys[#{i}]
+      end
+      def #{n}_privkey
+        privkeys[#{i}]
+      end
+      METHOD
+    end
+
     def state
       @state ||= Tester::State.new privkeys: privkeys
     end
