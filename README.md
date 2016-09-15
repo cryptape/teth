@@ -1,29 +1,29 @@
 ## Introduction
-EtherFly is a Ethereum smart contract test framework in ruby.It provides two testing environments: testing in ruby EVM and testing in geth.You don't need to understand ruby grammar, just enjoy syntactic sugar.
+Teth is a Ethereum smart contract test framework in ruby.It provides two testing environments: testing in ruby EVM and testing in geth.You don't need to understand ruby grammar, just enjoy syntactic sugar.
 
 ## Install
 ```shell
-bundle install ether-fly
+bundle install teth
 ```
 
 ## How to use
 
 Help command:
 ```
-$ ether-fly
+$ teth
 ```
 Create a new Smart Contract application
 ```
-$ ether-fly n project
+$ teth n project
 $ cd project
 ```
 Generate new Smart Contract and test file
 ```
-$ ether-fly g game
+$ teth g game
 ```
 Run tests
 ```
-$ ether-fly t game
+$ teth t game
 ```
 
 ## Unit tests
