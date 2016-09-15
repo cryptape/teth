@@ -5,7 +5,23 @@ module Teth
   class Minitest < ::Minitest::Test
     include Ethereum
 
-    CONTRACT_DIR_NAME = 'contracts'
+    class <<self
+      def contract_dir_name(set_val=nil)
+        if set_val
+          @contract_dir_name = set_val
+        else
+          @contract_dir_name ||= 'contracts'
+        end
+      end
+
+      def account_num(set_val=nil)
+        if set_val
+          @account_num = set_val
+        else
+          @account_num ||= 10
+        end
+      end
+    end
 
     def setup
       path = find_contract_source
@@ -23,7 +39,7 @@ module Teth
       case path
       when /\.sol\z/
         code = File.read path
-        @contract = state.abi_contract code, language: :solidity
+        @contract = state.abi_contract code, language: :solidity, sender: privkey
       when /\.se\z/
         raise NotImplemented, "Serpent not supported yet"
       else
@@ -45,7 +61,7 @@ module Teth
       last = nil
       cur = ENV['PWD']
       while cur != last
-        path = File.join cur, CONTRACT_DIR_NAME
+        path = File.join cur, self.class.contract_dir_name
         return path if File.directory?(path)
         last = cur
         cur = File.dirname cur
@@ -63,8 +79,7 @@ module Teth
     # Fixtures
     #
 
-    ACCOUNT_NUM = 10
-    @@privkeys = ACCOUNT_NUM.times.map do |i|
+    @@privkeys = account_num.times.map do |i|
       Utils.keccak256 rand(Constant::TT256).to_s
     end
 
@@ -83,7 +98,7 @@ module Teth
     def account
       return @account if @account
 
-      i = rand(ACCOUNT_NUM)
+      i = rand(self.class.account_num)
       @account = [privkeys[i], pubkeys[i], addresses[i]]
     end
 
@@ -100,7 +115,11 @@ module Teth
     end
 
     def state
-      @state ||= Tester::State.new
+      @state ||= Tester::State.new privkeys: privkeys
+    end
+
+    def head
+      state.head
     end
 
   end
