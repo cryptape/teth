@@ -1,0 +1,227 @@
+I0915 19:56:10.083462 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 19:56:10.093808 ethdb/database.go:169] closed db:data/chaindata
+I0915 19:56:10.096025 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 19:56:10.143131 eth/backend.go:621] upgrading db log bloom bins
+I0915 19:56:10.143222 eth/backend.go:629] upgrade completed in 95.272µs
+I0915 19:56:10.143248 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 19:56:10.145630 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 19:56:10.145673 eth/backend.go:201] Blockchain DB Version: 3
+I0915 19:56:10.145924 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 19:56:10.145935 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 19:56:10.145941 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 19:56:10.146537 p2p/server.go:313] Starting Server
+I0915 19:56:10.147257 p2p/server.go:556] Listening on [::]:30303
+I0915 19:56:10.147602 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 19:56:10.149678 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+I0915 19:56:11.340740 cmd/geth/accountcmd.go:189] Unlocked account 3ae88fe370c39384fc16da2c9e768cf5d2495b48
+I0915 19:56:11.471710 node/node.go:383] HTTP endpoint closed: http://localhost:8545
+I0915 19:56:11.471790 node/node.go:328] IPC endpoint closed: data/geth.ipc
+I0915 19:56:11.471805 core/blockchain.go:565] Chain manager stopped
+I0915 19:56:11.471813 eth/handler.go:224] Stopping ethereum protocol handler...
+I0915 19:56:11.471835 eth/handler.go:245] Ethereum protocol handler stopped
+I0915 19:56:11.471847 core/tx_pool.go:163] Transaction pool stopped
+I0915 19:56:11.471868 eth/backend.go:500] Automatic pregeneration of ethash DAG OFF (ethash dir: /Users/u2/.ethash)
+I0915 19:56:11.472085 ethdb/database.go:169] closed db:data/chaindata
+I0915 19:56:11.472170 ethdb/database.go:169] closed db:data/dapp
+I0915 19:56:12.204678 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303 (ethereum p2p) using UPNP IGDv1-IP1
+I0915 19:56:33.915876 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 19:56:33.923933 ethdb/database.go:169] closed db:data/chaindata
+I0915 19:56:33.924597 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 19:56:33.971247 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 19:56:33.974247 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 19:56:33.974332 eth/backend.go:201] Blockchain DB Version: 3
+I0915 19:56:33.975010 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 19:56:33.975028 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 19:56:33.975036 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 19:56:33.976536 p2p/server.go:313] Starting Server
+I0915 19:56:33.976683 p2p/server.go:556] Listening on [::]:30303
+I0915 19:56:33.978181 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 19:56:33.980703 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+I0915 19:56:34.977424 cmd/geth/accountcmd.go:189] Unlocked account 3ae88fe370c39384fc16da2c9e768cf5d2495b48
+I0915 19:56:35.070504 node/node.go:383] HTTP endpoint closed: http://localhost:8545
+I0915 19:56:35.070597 node/node.go:328] IPC endpoint closed: data/geth.ipc
+I0915 19:56:35.070613 core/blockchain.go:565] Chain manager stopped
+I0915 19:56:35.070621 eth/handler.go:224] Stopping ethereum protocol handler...
+I0915 19:56:35.070679 eth/handler.go:245] Ethereum protocol handler stopped
+I0915 19:56:35.070699 core/tx_pool.go:163] Transaction pool stopped
+I0915 19:56:35.070724 eth/backend.go:500] Automatic pregeneration of ethash DAG OFF (ethash dir: /Users/u2/.ethash)
+I0915 19:56:35.070973 ethdb/database.go:169] closed db:data/chaindata
+I0915 19:56:35.071080 ethdb/database.go:169] closed db:data/dapp
+I0915 19:56:36.036391 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303 (ethereum p2p) using UPNP IGDv1-IP1
+I0915 20:05:56.448253 cmd/utils/flags.go:678] You're one of the lucky few that will try out the JIT VM (random). If you get a consensus failure please be so kind to report this incident with the block hash that failed. You can switch to the regular VM by setting --jitvm=false
+I0915 20:05:56.450005 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:05:56.461712 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:05:56.462375 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:05:56.507217 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:05:56.510804 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:05:56.510944 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:05:56.511544 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:05:56.511557 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:05:56.511564 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:05:56.512088 p2p/server.go:313] Starting Server
+I0915 20:05:56.512544 p2p/server.go:556] Listening on [::]:30303
+I0915 20:05:56.513121 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:05:56.515474 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+Fatal: Failed to read passphrase: prompt aborted
+I0915 20:10:42.081420 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:10:42.096517 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:10:42.097908 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:10:42.143972 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:10:42.152031 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:10:42.152133 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:10:42.153054 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:10:42.153073 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:10:42.153083 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:10:42.153847 p2p/server.go:313] Starting Server
+I0915 20:10:42.154103 p2p/server.go:556] Listening on [::]:30303
+I0915 20:10:42.155247 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:10:42.157981 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+Fatal: Failed to read password file: open 123456: no such file or directory
+I0915 20:10:49.123966 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:10:49.130147 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:10:49.130591 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:10:49.179589 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:10:49.184158 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:10:49.184225 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:10:49.185094 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:10:49.185108 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:10:49.185114 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:10:49.185831 p2p/server.go:313] Starting Server
+I0915 20:10:49.185974 p2p/server.go:556] Listening on [::]:30303
+I0915 20:10:49.187033 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:10:49.189784 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+Fatal: Failed to read password file: open 123456: no such file or directory
+I0915 20:11:20.313765 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:11:20.328068 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:11:20.329052 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:11:20.405834 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:11:20.418865 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:11:20.421994 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:11:20.425851 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:11:20.425874 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:11:20.425884 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:11:20.429239 p2p/server.go:313] Starting Server
+I0915 20:11:20.429389 p2p/server.go:556] Listening on [::]:30303
+I0915 20:11:20.430795 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:11:20.433355 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+Fatal: Failed to read password file: open --preload: no such file or directory
+I0915 20:12:06.682826 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:12:06.697834 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:12:06.701590 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:12:06.864788 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:12:06.875046 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:12:06.876023 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:12:06.877050 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:12:06.877080 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:12:06.877092 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:12:06.877885 p2p/server.go:313] Starting Server
+I0915 20:12:06.878278 p2p/server.go:556] Listening on [::]:30303
+I0915 20:12:06.879829 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:12:06.883495 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+I0915 20:12:08.070595 cmd/geth/accountcmd.go:189] Unlocked account 3ae88fe370c39384fc16da2c9e768cf5d2495b48
+I0915 20:12:08.251922 node/node.go:383] HTTP endpoint closed: http://localhost:8545
+I0915 20:12:08.252016 node/node.go:328] IPC endpoint closed: data/geth.ipc
+I0915 20:12:08.252038 core/blockchain.go:565] Chain manager stopped
+I0915 20:12:08.252049 eth/handler.go:224] Stopping ethereum protocol handler...
+I0915 20:12:08.253405 eth/handler.go:245] Ethereum protocol handler stopped
+I0915 20:12:08.253451 core/tx_pool.go:163] Transaction pool stopped
+I0915 20:12:08.253640 eth/backend.go:500] Automatic pregeneration of ethash DAG OFF (ethash dir: /Users/u2/.ethash)
+I0915 20:12:08.253850 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:12:08.253971 ethdb/database.go:169] closed db:data/dapp
+I0915 20:12:08.805426 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303 (ethereum p2p) using UPNP IGDv1-IP1
+I0915 20:12:28.139548 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:12:28.150052 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:12:28.150735 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:12:28.194981 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:12:28.198036 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:12:28.198108 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:12:28.198837 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:12:28.198853 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:12:28.198859 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:12:28.199362 p2p/server.go:313] Starting Server
+I0915 20:12:28.199476 p2p/server.go:556] Listening on [::]:30303
+I0915 20:12:28.200399 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:12:28.202568 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+I0915 20:12:29.182729 cmd/geth/accountcmd.go:189] Unlocked account 3ae88fe370c39384fc16da2c9e768cf5d2495b48
+I0915 20:12:29.276440 node/node.go:383] HTTP endpoint closed: http://localhost:8545
+I0915 20:12:29.276521 node/node.go:328] IPC endpoint closed: data/geth.ipc
+I0915 20:12:29.276544 core/blockchain.go:565] Chain manager stopped
+I0915 20:12:29.276552 eth/handler.go:224] Stopping ethereum protocol handler...
+I0915 20:12:29.276570 eth/handler.go:245] Ethereum protocol handler stopped
+I0915 20:12:29.276584 core/tx_pool.go:163] Transaction pool stopped
+I0915 20:12:29.276604 eth/backend.go:500] Automatic pregeneration of ethash DAG OFF (ethash dir: /Users/u2/.ethash)
+I0915 20:12:29.276835 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:12:29.276932 ethdb/database.go:169] closed db:data/dapp
+I0915 20:12:30.255216 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303 (ethereum p2p) using UPNP IGDv1-IP1
+I0915 20:13:18.999604 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:13:19.007346 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:13:19.008096 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:13:19.059130 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:13:19.062966 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:13:19.063046 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:13:19.063966 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:13:19.063986 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:13:19.063995 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:13:19.064748 p2p/server.go:313] Starting Server
+I0915 20:13:19.065000 p2p/server.go:556] Listening on [::]:30303
+I0915 20:13:19.067645 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:13:19.070086 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+I0915 20:13:20.064124 cmd/geth/accountcmd.go:189] Unlocked account 3ae88fe370c39384fc16da2c9e768cf5d2495b48
+I0915 20:13:20.154419 node/node.go:383] HTTP endpoint closed: http://localhost:8545
+I0915 20:13:20.154536 node/node.go:328] IPC endpoint closed: data/geth.ipc
+I0915 20:13:20.154556 core/blockchain.go:565] Chain manager stopped
+I0915 20:13:20.154567 eth/handler.go:224] Stopping ethereum protocol handler...
+I0915 20:13:20.154595 eth/handler.go:245] Ethereum protocol handler stopped
+I0915 20:13:20.154614 core/tx_pool.go:163] Transaction pool stopped
+I0915 20:13:20.154643 eth/backend.go:500] Automatic pregeneration of ethash DAG OFF (ethash dir: /Users/u2/.ethash)
+I0915 20:13:20.154895 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:13:20.154996 ethdb/database.go:169] closed db:data/dapp
+I0915 20:13:21.163116 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303 (ethereum p2p) using UPNP IGDv1-IP1
+I0915 20:14:10.271050 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:14:10.280229 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:14:10.280684 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:14:10.324646 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:14:10.327510 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:14:10.327615 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:14:10.328857 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:14:10.328879 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:14:10.328885 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:14:10.329556 p2p/server.go:313] Starting Server
+I0915 20:14:10.329684 p2p/server.go:556] Listening on [::]:30303
+I0915 20:14:10.330877 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:14:10.333007 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+I0915 20:14:11.315115 cmd/geth/accountcmd.go:189] Unlocked account 3ae88fe370c39384fc16da2c9e768cf5d2495b48
+I0915 20:14:11.407792 node/node.go:383] HTTP endpoint closed: http://localhost:8545
+I0915 20:14:11.407907 node/node.go:328] IPC endpoint closed: data/geth.ipc
+I0915 20:14:11.407928 core/blockchain.go:565] Chain manager stopped
+I0915 20:14:11.407940 eth/handler.go:224] Stopping ethereum protocol handler...
+I0915 20:14:11.407979 eth/handler.go:245] Ethereum protocol handler stopped
+I0915 20:14:11.407999 core/tx_pool.go:163] Transaction pool stopped
+I0915 20:14:11.408024 eth/backend.go:500] Automatic pregeneration of ethash DAG OFF (ethash dir: /Users/u2/.ethash)
+I0915 20:14:11.408308 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:14:11.408444 ethdb/database.go:169] closed db:data/dapp
+I0915 20:14:12.382810 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303 (ethereum p2p) using UPNP IGDv1-IP1
+I0915 20:17:03.619333 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:17:03.628462 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:17:03.629163 ethdb/database.go:82] Alloted 128MB cache and 1024 file handles to data/chaindata
+I0915 20:17:03.676054 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to data/dapp
+I0915 20:17:03.680405 eth/backend.go:172] Protocol Versions: [63 62], Network Id: 31415926
+I0915 20:17:03.680609 eth/backend.go:201] Blockchain DB Version: 3
+I0915 20:17:03.681436 core/blockchain.go:206] Last header: #0 [611596e7…] TD=131072
+I0915 20:17:03.681457 core/blockchain.go:207] Last block: #0 [611596e7…] TD=131072
+I0915 20:17:03.681465 core/blockchain.go:208] Fast block: #0 [611596e7…] TD=131072
+I0915 20:17:03.682164 p2p/server.go:313] Starting Server
+I0915 20:17:03.682433 p2p/server.go:556] Listening on [::]:30303
+I0915 20:17:03.684497 node/node.go:296] IPC endpoint opened: data/geth.ipc
+I0915 20:17:03.687885 node/node.go:366] HTTP endpoint opened: http://localhost:8545
+I0915 20:17:04.995403 cmd/geth/accountcmd.go:189] Unlocked account 3ae88fe370c39384fc16da2c9e768cf5d2495b48
+I0915 20:17:05.139917 node/node.go:383] HTTP endpoint closed: http://localhost:8545
+I0915 20:17:05.140017 node/node.go:328] IPC endpoint closed: data/geth.ipc
+I0915 20:17:05.140034 core/blockchain.go:565] Chain manager stopped
+I0915 20:17:05.140042 eth/handler.go:224] Stopping ethereum protocol handler...
+I0915 20:17:05.140071 eth/handler.go:245] Ethereum protocol handler stopped
+I0915 20:17:05.140087 core/tx_pool.go:163] Transaction pool stopped
+I0915 20:17:05.140110 eth/backend.go:500] Automatic pregeneration of ethash DAG OFF (ethash dir: /Users/u2/.ethash)
+I0915 20:17:05.140337 ethdb/database.go:169] closed db:data/chaindata
+I0915 20:17:05.140478 ethdb/database.go:169] closed db:data/dapp
+I0915 20:17:05.735580 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303 (ethereum p2p) using UPNP IGDv1-IP1

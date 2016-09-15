@@ -61,3 +61,12 @@ end
 ```
 More details:
 https://github.com/seattlerb/minitest
+
+## TODO
+- Extract test file require and others
+- Save migrate address
+- Migrate ARGV
+- Script for preload
+- Easy way to load contract on chain
+- Easy way to test on chain
+- ES6
