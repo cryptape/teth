@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "teth"
-  s.version     = "0.0.2"
+  s.version     = "0.1.0"
   s.authors     = ["Zhang YaNing", "Jan Xie"]
   s.email       = ["zhangyaning1985@gmail.com", "jan.h.xie@gmail.com"]
   s.homepage    = "https://github.com/cryptape/teth"
