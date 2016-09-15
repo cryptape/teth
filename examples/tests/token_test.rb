@@ -1,10 +1,7 @@
 require 'minitest/autorun'
-require 'ethereum'
-require 'json'
+require 'teth'
 
-class TokenTest < Minitest::Test
-  include Ethereum
-
+class TokenTest < Teth::Minitest
   def setup
     @state = Tester::State.new
     @solidity_code = File.read('./contracts/Token.sol')
