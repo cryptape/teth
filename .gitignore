@@ -1,2 +1,4 @@
 examples/Gemfile.lock
 .bundle
+examples/data
+examples/logfile
