@@ -1,1 +1,2 @@
-gem 'teth', '>= 0.0.2'
+gem 'teth', '>= 0.0.2', path: '..'
+#gem 'ruby-ethereum', path: '../../../mine/ruby-ethereum'

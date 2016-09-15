@@ -1,3 +1,5 @@
+pragma solidity ^0.4.0;
+
 contract Token {
     address issuer;
     mapping (address => uint) balances;
