@@ -8,15 +8,17 @@ class TokenTest < Teth::Minitest
   end
 
   def test_issue_exception
-    assert_raises(TransactionFailed) { contract.issue Tester::Fixture.accounts[3], 100, sender: Tester::Fixture.keys[4] }
-    assert_equal 0, contract.getBalance(Tester::Fixture.accounts[3])
+    assert_raises(TransactionFailed) do
+      contract.issue addresses[1], 100, sender: privkeys[2]
+    end
+    assert_equal 0, contract.getBalance(addresses[1])
   end
 
   def test_token_transfer
-    contract.issue Tester::Fixture.accounts[2], 100
-    contract.transfer Tester::Fixture.accounts[3], 90, sender: Tester::Fixture.keys[2]
-    assert_equal 90, contract.getBalance(Tester::Fixture.accounts[3])
+    contract.issue addresses[2], 100
+    contract.transfer addresses[3], 90, sender: privkeys[2]
+    assert_equal 90, contract.getBalance(addresses[3])
 
-    assert_raises(TransactionFailed) { contract.transfer Tester::Fixture.accounts[3], 90, sender: Tester::Fixture.keys[2] }
+    assert_raises(TransactionFailed) { contract.transfer addresses[3], 90, sender: privkeys[2] }
   end
 end
