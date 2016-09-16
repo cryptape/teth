@@ -1,9 +1,6 @@
 require 'teth/minitest'
 
 class TokenTest < Teth::Minitest
-  print_logs false
-  print_events false
-
   def test_issue_balance
     assert_equal 0, contract.getBalance(bob)
     contract.issue bob, 100

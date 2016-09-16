@@ -24,7 +24,7 @@ module Teth
 
       def print_events(set_val=nil)
         if set_val.nil?
-          return true if @print_events.nil?
+          return false if @print_events.nil?
           @print_events
         else
           @print_events = set_val
