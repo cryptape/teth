@@ -420,3 +420,46 @@ var Token = TokenContract.at('0x80d29fb7f81d2ccd77c708b6135389c9c08653dc');
 
 ```
 Deploy all contracts if no contract name provided.
+
+#### Write your own javascript test
+`gtests/Token_test.js`
+```javascript
+loadScript('temp/migrations/Token.js');
+
+var balance = Token.getBalance.call(web3.eth.accounts[0], { from: web3.eth.accounts[0] })
+
+console.log("balance is: ", balance);
+
+Token.issue.sendTransaction(web3.eth.accounts[0], 10000, { from: web3.eth.accounts[0] }, function(err, tx){
+  if(err){
+    console.log("issue error!");
+  } else {
+    console.log("issue success. tx: ", tx);
+  }
+})
+
+miner.start();admin.sleepBlocks(2);miner.stop();
+
+balance = Token.getBalance.call(web3.eth.accounts[0], { from: web3.eth.accounts[0] })
+
+console.log("balance is: ", balance);
+
+```
+
+#### Run gtest
+```
+$ teth gt token
+***** Using geth at: geth
+Testing contract Token...
+balance is:  0
+issue success. tx:  0x7fd24d1903345d4f70208c41fc3a1bd71be63f8dd7db7c654f2d3a7c176b4031
+balance is:  10000
+true
+Done.
+```
+
+:beers
+
+## TODO:
+
+- Add chai for js test
