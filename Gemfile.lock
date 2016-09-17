@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    teth (0.1.1)
+    teth (0.2.1)
       minitest (~> 5.8)
       ruby-ethereum (>= 0.9.5)
 
@@ -13,7 +13,7 @@ GEM
       logging (~> 2.0)
     digest-sha3 (1.1.0)
     ethash (0.2.0)
-    ffi (1.9.14)
+    ffi (1.9.10)
     fiddler-rb (0.1.2)
     leveldb (0.1.9)
       fiddler-rb (~> 0.1.1)
@@ -22,7 +22,7 @@ GEM
       little-plugger (~> 1.1)
       multi_json (~> 1.10)
     lru_redux (1.1.0)
-    minitest (5.9.0)
+    minitest (5.8.4)
     multi_json (1.12.1)
     rlp (0.7.3)
     ruby-ethereum (0.9.5)
