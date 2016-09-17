@@ -71,6 +71,7 @@ def new
 
     FileUtils.cp("#{gem_dir}/lib/teth/templates/genesis.json", "#{name}/genesis.json")
     FileUtils.cp("#{gem_dir}/lib/teth/templates/rakefile", "#{name}/rakefile")
+    FileUtils.cp("#{gem_dir}/lib/teth/templates/gitignore", "#{name}/.gitignore")
 
     FileUtils.cp_r("#{gem_dir}/lib/teth/templates/bin/", "#{name}")
     FileUtils.chmod_R 0700, "#{name}/bin/"
