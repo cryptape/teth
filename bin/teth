@@ -55,9 +55,9 @@ def new
   name = ARGV.shift
   if name
     puts "Creating project #{name}..."
-    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir contracts && mkdir tests")
+    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir db && mkdir contracts && mkdir tests")
 
-    gemfile = File.open("#{gem_dir}/lib/teth/erbs/Gemfile")
+    gemfile = File.read("#{gem_dir}/lib/teth/erbs/Gemfile")
 
     File.open("#{name}/Gemfile", "w+") {|f| f.write(gemfile) }
     system("cd #{name} && bundle install")
@@ -68,6 +68,9 @@ def new
 
     FileUtils.cp("#{gem_dir}/lib/teth/templates/private_keys/import.sh", "#{name}/private_keys/import.sh")
     FileUtils.chmod 0700, "#{name}/private_keys/import.sh"
+
+    FileUtils.cp("#{gem_dir}/lib/teth/templates/genesis.json", "#{name}/genesis.json")
+    FileUtils.cp("#{gem_dir}/lib/teth/templates/rakefile", "#{name}/rakefile")
 
     FileUtils.cp_r("#{gem_dir}/lib/teth/templates/bin/", "#{name}")
     FileUtils.chmod_R 0700, "#{name}/bin/"
@@ -116,7 +119,8 @@ def import_keys
 end
 
 def build
-  system("./bin/build.sh")
+  name = ARGV.shift
+  system("./bin/build.sh #{name}")
 end
 
 def server
@@ -124,6 +128,8 @@ def server
 end
 
 def migrate
+  name = ARGV.shift
+  system("./bin/migrate.sh #{name}")
 end
 
 def console

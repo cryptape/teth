@@ -98,3 +98,7 @@ File.open(javascript_file_name, 'w') do |f|
   f.write("console.log('Contract : #{contract_variable_name}');")
   f.write("console.log('Contract Instance : #{contract_instance_variable_name}');")
 end
+
+File.open("db/#{current_contract}.json", "w") do |f|
+  f.write(compiled_object.to_json)
+end
