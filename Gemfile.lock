@@ -1,22 +1,9 @@
 PATH
-  remote: ../../mine/ruby-ethereum
-  specs:
-    ruby-ethereum (0.9.4)
-      bitcoin-secp256k1 (~> 0.4)
-      block_logger (~> 0.1)
-      digest-sha3 (~> 1.1)
-      ethash (~> 0.2)
-      ffi (~> 1.9)
-      leveldb (= 0.1.9)
-      lru_redux (~> 1.1)
-      rlp (= 0.7.3)
-
-PATH
   remote: .
   specs:
     teth (0.1.1)
       minitest (~> 5.8)
-      ruby-ethereum (~> 0.9)
+      ruby-ethereum (>= 0.9.5)
 
 GEM
   specs:
@@ -38,12 +25,20 @@ GEM
     minitest (5.8.4)
     multi_json (1.12.1)
     rlp (0.7.3)
+    ruby-ethereum (0.9.5)
+      bitcoin-secp256k1 (~> 0.4)
+      block_logger (~> 0.1)
+      digest-sha3 (~> 1.1)
+      ethash (~> 0.2)
+      ffi (~> 1.9)
+      leveldb (= 0.1.9)
+      lru_redux (~> 1.1)
+      rlp (= 0.7.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  ruby-ethereum!
   teth!
 
 BUNDLED WITH
