@@ -6,7 +6,7 @@ then
   do
     echo "Building contract ${sol}"
     let len=${#sol}-16
-    let jsfile="${sol:12:len}_compiled.js"
+    jsfile="${sol:12:len}_compiled.js"
     ./bin/solc_helper.rb ${sol} $jsfile
     mv $jsfile builds/
   done
@@ -16,9 +16,9 @@ else
   sol="$(tr '[:lower:]' '[:upper:]' <<< ${sol:0:1})${sol:1}"
   echo "Building contract ${sol}"
 
-  let file="contracts/${sol}.sol"
-  let len=${#sol}-16
-  let jsfile="${sol}_compiled.js"
+  file="contracts/${sol}.sol"
+  len=${#sol}-16
+  jsfile="${sol}_compiled.js"
   ./bin/solc_helper.rb $file $jsfile
   mv $jsfile builds/
   echo "Done."
