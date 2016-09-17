@@ -13,8 +13,9 @@ bundle install teth
 
 ## How to use
 
-Help command:
+#### Help command
 ```
+$ teth
 Usage: teth COMMAND [ARGS]
 The most common teth commands are:
   new         Create a new Smart Contract application. "teth new my_app" creates a
@@ -34,6 +35,7 @@ The most common teth commands are:
 All commands can be run with -h (or --help) for more information.
 
 ```
+#### Creeat project
 Create a new Smart Contract application
 ```shell
 $ teth n examples
@@ -140,7 +142,7 @@ end
 
 ```
 
-Run tests in ruby evm
+#### Run tests in ruby evm
 ```shell
 $ teth t token
 Test Token contract...
@@ -156,7 +158,7 @@ Finished in 1.935546s, 2.0666 runs/s, 3.6166 assertions/s.
 Done.
 ```
 
-## Unit tests
+#### Unit tests
 You can wirte fast, simple tests.
 ```ruby
 require 'teth/minitest'
@@ -192,7 +194,7 @@ end
 More details:
 https://github.com/seattlerb/minitest
 
-## Geth init
+#### Init geth block
 ```shell
 $ teth init
 Initialising a new genesis block...
@@ -200,7 +202,7 @@ Initialising a new genesis block...
 I0917 16:01:17.338908 ethdb/database.go:82] Alloted 16MB cache and 16 file handles to /Users/u2/cryptape/teth/examples/data/chaindata
 I0917 16:01:17.347151 cmd/geth/main.go:299] successfully wrote genesis block and/or chain rule set: 611596e7979cd4e7ca1531260fa706093a5492ecbdf58f20a39545397e424d04
 ```
-## Geth import keys
+#### Import keys to geth
 ```shell
 $ teth ik
 Importing keys, this will take a while, please be patient......
@@ -229,7 +231,7 @@ Address: {9da26fc2e1d6ad9fdd46138906b0104ae68a65d8}
 ```
 Notice: *This will take a while, please be patient. No need to input your password.*
 
-## Build contract
+#### Build contract
 ```shell
 $ teth build token
 Building contract Token
@@ -252,7 +254,7 @@ Done.
 ```
 Build all contracts if no contract name provided.
 
-## Start geth server
+#### Start geth server
 ```shell
 $ teth server
 ***** Using geth at: geth
@@ -275,7 +277,7 @@ I0917 16:17:16.959797 node/node.go:366] HTTP endpoint opened: http://localhost:8
 I0917 16:17:17.945231 cmd/geth/accountcmd.go:189] Unlocked account 3ae88fe370c39384fc16da2c9e768cf5d2495b48
 I0917 16:17:19.158064 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303 (ethereum p2p) using UPNP IGDv1-IP1
 ```
-## Migrate
+#### Migrate
 Deploy your contract on geth, must keep teth sever started.
 ```shell
 Migrating contract token
@@ -418,4 +420,3 @@ var Token = TokenContract.at('0x3a020580345e79e223580d8d6a50e063667f19b5');
 
 ```
 Deploy all contracts if no contract name provided.
-
