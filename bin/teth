@@ -55,7 +55,7 @@ def new
   name = ARGV.shift
   if name
     puts "Creating project #{name}..."
-    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir db && mkdir migrates && mkdir contracts && mkdir tests")
+    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir db && mkdir migrations && mkdir contracts && mkdir tests")
 
     gemfile = File.read("#{gem_dir}/lib/teth/erbs/Gemfile")
 
@@ -144,11 +144,14 @@ def migrate
       File.open("db/#{contract}.json", "w") do |f|
         f.write(JSON.pretty_generate data)
       end
-      File.open("migrates/#{contract}.js", "w") do |f|
+      File.open("migrations/#{contract}.js", "w") do |f|
         abi = data[contract]["abi"]
         template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/migration")
         migration = template.result(binding)
         f.write(migration)
+      end
+      File.open("tests/#{contract}_test.js", "w") do |f|
+        f.write("loadScript('migrations/#{contract}.js');")
       end
     end
   end
@@ -159,7 +162,8 @@ def console
 end
 
 def geth_test
-  system("./bin/test.sh")
+  name = ARGV.shift
+  system("./bin/test.sh #{name}")
 end
 
 def help
