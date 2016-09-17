@@ -97,6 +97,9 @@ def generate
     test_template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/contract_test.rb")
     test = test_template.result(binding)
     File.open("tests/#{name}_test.rb", "w+") {|f| f.write(test) }
+    File.open("gtests/#{contract}_test.js", "w") do |f|
+      f.write("loadScript('temp/migrations/#{contract}.js');")
+    end
     puts "Done."
   else
     puts "Need contract name"
@@ -161,9 +164,6 @@ def migrate
         template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/migration")
         migration = template.result(binding)
         f.write(migration.gsub("=>", ":"))
-      end
-      File.open("gtests/#{contract}_test.js", "w") do |f|
-        f.write("loadScript('temp/migrations/#{contract}.js');")
       end
     end
   end
