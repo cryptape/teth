@@ -210,7 +210,7 @@ Address: {9da26fc2e1d6ad9fdd46138906b0104ae68a65d8}
 ***** Done.
 
 ```
-Notice:*This will take a while, please be patient. No need input your password.*
+Notice: *This will take a while, please be patient. No need to input your password.*
 
 ## Build contract
 ```shell
@@ -233,7 +233,7 @@ Enter Input:
 
 Done.
 ```
-Build all contracts if no contract provided.
+Build all contracts if no contract name provided.
 
 ## Start geth server
 ```shell
@@ -273,8 +273,7 @@ Contract mined! Address: 0x3a020580345e79e223580d8d6a50e063667f19b5
 Done.
 
 ```
-This deploy contract on geth, and create two files.
-One is `temp/db/Token.json` keeps abi and address.
+This deploys contract on geth, and creates two files.One is `temp/db/Token.json` which keeps abi and address.
 ```json
 {
   "Token": {
@@ -401,5 +400,5 @@ var TokenContract = web3.eth.contract([{"constant"=>false, "inputs"=>[{"name"=>"
 var Token = TokenContract.at('0x3a020580345e79e223580d8d6a50e063667f19b5');
 
 ```
-Deploy all contracts if no contract provided.
+Deploy all contracts if no contract name provided.
 
