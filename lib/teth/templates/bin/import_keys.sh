@@ -1,6 +1,7 @@
 #!/bin/sh
 
 geth=${GETH:-geth}
+
 echo "***** Using geth at: $geth"
 
 echo "***** Import all pre-funded private keys"

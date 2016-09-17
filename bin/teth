@@ -26,16 +26,18 @@ HELP_MESSAGE = <<-EOF
 Usage: teth COMMAND [ARGS]
 The most common teth commands are:
   new         Create a new Smart Contract application. "teth new my_app" creates a
-              new application called MyApp in "./my_app" (short-cut alias: "n")
-  generate    Generate new Smart Contract and test file (short-cut alias: "g")
-  test        Run tests (short-cut alias: "t")
-  init        Init private geth chain (short-cut alias: "i")
-  import_keys Import keys to chain (short-cut alias: "ik")
+              new application called my_app in "./my_app" (short-cut alias: "n")
+  generate    Generate new solidity smart contract and test files. "teth generate token"
+              creates Token contract and corresponding test files. (short-cut alias: "g")
+  test        Run your ruby tests in ruby evm. (short-cut alias: "t")
+  init        Bootstraps and initialises a new genesis block. "teth init" creates data directory
+              for private chain.(short-cut alias: "i")
+  import_keys Import keys to private chain (short-cut alias: "ik")
   build       Build contract (short-cut alias: "b")
-  migrate     Deploy contract on chain (short-cut alias: "m")
-  server      Start chain server (short-cut alias: "s")
-  console     Open Chain console (short-cut alias: "c")
-  geth_test   Test on chain (short-cut alias: "gt")
+  migrate     Deploy contract on private chain (short-cut alias: "m")
+  server      Start geth server (short-cut alias: "s")
+  console     Start geth attach (short-cut alias: "c")
+  geth_test   Run your javascript tests on geth (short-cut alias: "gt")
 
 All commands can be run with -h (or --help) for more information.
 EOF
@@ -55,7 +57,8 @@ def new
   name = ARGV.shift
   if name
     puts "Creating project #{name}..."
-    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir temp && mkdir contracts && mkdir tests")
+    dirs_commands = %w{ private_keys builds temp contracts tests}.map{ |d| "mkdir #{d}" }.join(" && ")
+    system("mkdir #{name} && cd #{name} && #{dirs_commands}")
     system("cd #{name} && cd temp && mkdir db && mkdir migrations")
     gemfile = File.read("#{gem_dir}/lib/teth/erbs/Gemfile")
 
@@ -69,9 +72,10 @@ def new
     FileUtils.cp("#{gem_dir}/lib/teth/templates/private_keys/import.sh", "#{name}/private_keys/import.sh")
     FileUtils.chmod 0700, "#{name}/private_keys/import.sh"
 
-    FileUtils.cp("#{gem_dir}/lib/teth/templates/genesis.json", "#{name}/genesis.json")
-    FileUtils.cp("#{gem_dir}/lib/teth/templates/rakefile", "#{name}/rakefile")
-    FileUtils.cp("#{gem_dir}/lib/teth/templates/gitignore", "#{name}/.gitignore")
+    %w{genesis.json rakefile gitignore}.each do |f|
+      FileUtils.cp("#{gem_dir}/lib/teth/templates/#{f}", "#{name}/#{f}")
+    end
+    FileUtils.mv("#{name}/gitignore", "#{name}/.gitignore")
 
     FileUtils.cp_r("#{gem_dir}/lib/teth/templates/bin/", "#{name}")
     FileUtils.chmod_R 0700, "#{name}/bin/"
@@ -84,14 +88,14 @@ end
 def generate
   name = ARGV.shift
   if name
+    puts "Creating #{name.capitalize} contract file..."
     contract_template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/contract.sol")
     contract = contract_template.result(binding)
-    puts "Create #{name.capitalize}.sol contract file..."
     File.open("contracts/#{name.capitalize}.sol", "w+") { |f| f.write(contract) }
 
+    puts "Creating #{name} test files..."
     test_template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/contract_test.rb")
     test = test_template.result(binding)
-    puts "Create #{name}_test.rb test file..."
     File.open("tests/#{name.capitalize}_test.rb", "w+") {|f| f.write(test) }
     puts "Done."
   else
@@ -112,10 +116,12 @@ def test
 end
 
 def init
+  puts "Initialising a new genesis block..."
   system("./bin/init.sh")
 end
 
 def import_keys
+  puts "Importing keys..."
   system("./bin/import_keys.sh")
 end
 
@@ -130,8 +136,13 @@ end
 
 def migrate
   name = ARGV.shift
+  if name
+    puts "Migrating contract #{name}"
+  else
+    puts "Migrating all contracts"
+  end
   output = `./bin/migrate.sh #{name}`
-  puts "output: #{output}"
+  puts output
   contract = ""
   output.split("\n").each do |o|
     if o.match("Contract Instance")
