@@ -261,25 +261,145 @@ I0917 16:17:19.158064 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303
 ## Migrate
 Deploy your contract on geth, must keep teth sever started.
 ```shell
-$ ./bin/migrate.sh token
+Migrating contract token
 ***** Using geth at: geth
 null
-Contract transaction send: TransactionHash: 0xafe3911afe2b01aa3028c59c490db3fc773ef6becaccd7f69352f747e4e725d4 waiting to be mined...
+Contract transaction send: TransactionHash: 0x3a9ca7a774a4bc5b3ba23b57f3c65a5debbfcbba422f902009909604ee668a63 waiting to be mined...
 Compiled Object : TokenCompiled
 Contract : TokenContract
 Contract Instance : Token
 true
-Contract mined! Address: 0x0a6ffcc9aee581c76e3110c93f48f8d078dce645
+Contract mined! Address: 0x3a020580345e79e223580d8d6a50e063667f19b5
 Done.
+
+```
+This deploy contract on geth, and create two files.
+One is `temp/db/Token.json` keeps abi and address.
+```json
+{
+  "Token": {
+    "abi": [
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "issue",
+        "outputs": [
+
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": false,
+        "inputs": [
+          {
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "transfer",
+        "outputs": [
+
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [
+          {
+            "name": "account",
+            "type": "address"
+          }
+        ],
+        "name": "getBalance",
+        "outputs": [
+          {
+            "name": "",
+            "type": "uint256"
+          }
+        ],
+        "payable": false,
+        "type": "function"
+      },
+      {
+        "inputs": [
+
+        ],
+        "type": "constructor"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "account",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "Issue",
+        "type": "event"
+      },
+      {
+        "anonymous": false,
+        "inputs": [
+          {
+            "indexed": false,
+            "name": "from",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "to",
+            "type": "address"
+          },
+          {
+            "indexed": false,
+            "name": "amount",
+            "type": "uint256"
+          }
+        ],
+        "name": "Transfer",
+        "type": "event"
+      }
+    ],
+    "bin": "0x606060405260008054600160a060020a0319163317905561016f806100246000396000f3606060405260e060020a6000350463867904b48114610034578063a9059cbb1461005e578063f8b2cb4f14610092575b610002565b34610002576100bc600435602435600054600160a060020a0390811633909116146100be57610002565b34610002576100bc60043560243533600160a060020a03166000908152600160205260409020548190101561010f57610002565b3461000257600160a060020a03600435166000908152600160205260409020546060908152602090f35b005b600160a060020a03821660008181526001602052604090819020805484019055606091825260808390527fc65a3f767206d2fdcede0b094a4840e01c0dd0be1888b5ba800346eaa0123c1691a15050565b6040600081812080548490039055600160a060020a03808516808352929091208054840190553316606090815260809190915260a08290527fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef9080a1505056",
+    "devdoc": {
+      "methods": {
+      }
+    },
+    "userdoc": {
+      "methods": {
+      }
+    }
+  },
+  "address": "0x3a020580345e79e223580d8d6a50e063667f19b5"
+}
+```
+Another is `temp/migrations/Token.js`
+```javascript
+var TokenContract = web3.eth.contract([{"constant"=>false, "inputs"=>[{"name"=>"account", "type"=>"address"}, {"name"=>"amount", "type"=>"uint256"}], "name"=>"issue", "outputs"=>[], "payable"=>false, "type"=>"function"}, {"constant"=>false, "inputs"=>[{"name"=>"to", "type"=>"address"}, {"name"=>"amount", "type"=>"uint256"}], "name"=>"transfer", "outputs"=>[], "payable"=>false, "type"=>"function"}, {"constant"=>true, "inputs"=>[{"name"=>"account", "type"=>"address"}], "name"=>"getBalance", "outputs"=>[{"name"=>"", "type"=>"uint256"}], "payable"=>false, "type"=>"function"}, {"inputs"=>[], "type"=>"constructor"}, {"anonymous"=>false, "inputs"=>[{"indexed"=>false, "name"=>"account", "type"=>"address"}, {"indexed"=>false, "name"=>"amount", "type"=>"uint256"}], "name"=>"Issue", "type"=>"event"}, {"anonymous"=>false, "inputs"=>[{"indexed"=>false, "name"=>"from", "type"=>"address"}, {"indexed"=>false, "name"=>"to", "type"=>"address"}, {"indexed"=>false, "name"=>"amount", "type"=>"uint256"}], "name"=>"Transfer", "type"=>"event"}]);
+
+var Token = TokenContract.at('0x3a020580345e79e223580d8d6a50e063667f19b5');
 
 ```
 Deploy all contracts if no contract provided.
 
-## TODO
-- Extract test file require and others
-- Save migrate address
-- Migrate ARGV
-- Script for preload
-- Easy way to load contract on chain
-- Easy way to test on chain
-- ES6
