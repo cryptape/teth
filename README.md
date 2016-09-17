@@ -2,7 +2,7 @@
 Teth is a Ethereum smart contract test framework in ruby.It provides two testing environments: testing in ruby EVM and testing in geth.You don't need to understand ruby grammar, just enjoy syntactic sugar.
 
 ## Dependencies
-- Solidity ~> 0.3.6
+- Solidity ~> 0.4.1
 - Ruby ~> 2.2.2
 - Go-ethereum ~> 1.4.11
 
@@ -458,7 +458,7 @@ true
 Done.
 ```
 
-:beers
+:beers:
 
 ## TODO:
 
