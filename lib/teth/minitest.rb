@@ -41,7 +41,7 @@ module Teth
           if self.class.print_logs
             topics = log.topics.map {|t| heuristic_prettify Utils.int_to_big_endian(t) }
             data = heuristic_prettify(log.data)
-            puts "[Log] #{Utils.encode_hex(log.address)} >>> topics=#{topics} data=#{data}"
+            puts "[Log] #{Utils.encode_hex(log.address)} >>> topics=#{topics} data=#{data.inspect}"
           end
         else # user defined event
           if self.class.print_logs && self.class.print_events
@@ -108,22 +108,15 @@ module Teth
     end
 
     def privkey
-      account[0]
+      privkeys[0]
     end
 
     def pubkey
-      account[1]
+      pubkeys[0]
     end
 
     def address
-      account[2]
-    end
-
-    def account
-      return @account if @account
-
-      i = rand(self.class.account_num)
-      @account = [privkeys[i], pubkeys[i], addresses[i]]
+      addresses[0]
     end
 
     def privkeys
