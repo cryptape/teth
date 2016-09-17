@@ -15,7 +15,24 @@ bundle install teth
 
 Help command:
 ```
-$ teth
+Usage: teth COMMAND [ARGS]
+The most common teth commands are:
+  new         Create a new Smart Contract application. "teth new my_app" creates a
+              new application called my_app in "./my_app" (short-cut alias: "n")
+  generate    Generate new solidity smart contract and test files. "teth generate token"
+              creates Token contract and corresponding test files. (short-cut alias: "g")
+  test        Run your ruby tests in ruby evm. (short-cut alias: "t")
+  init        Bootstraps and initialises a new genesis block. "teth init" creates data directory
+              for private chain.(short-cut alias: "i")
+  import_keys Import keys to private chain (short-cut alias: "ik")
+  build       Build contract (short-cut alias: "b")
+  migrate     Deploy contract on private chain (short-cut alias: "m")
+  server      Start geth server (short-cut alias: "s")
+  console     Start geth attach (short-cut alias: "c")
+  geth_test   Run your javascript tests on geth (short-cut alias: "gt")
+
+All commands can be run with -h (or --help) for more information.
+
 ```
 Create a new Smart Contract application
 ```shell
