@@ -414,9 +414,9 @@ This deploys contract on geth, and creates two files.One is `temp/db/Token.json`
 ```
 Another is `temp/migrations/Token.js`
 ```javascript
-var TokenContract = web3.eth.contract([{"constant"=>false, "inputs"=>[{"name"=>"account", "type"=>"address"}, {"name"=>"amount", "type"=>"uint256"}], "name"=>"issue", "outputs"=>[], "payable"=>false, "type"=>"function"}, {"constant"=>false, "inputs"=>[{"name"=>"to", "type"=>"address"}, {"name"=>"amount", "type"=>"uint256"}], "name"=>"transfer", "outputs"=>[], "payable"=>false, "type"=>"function"}, {"constant"=>true, "inputs"=>[{"name"=>"account", "type"=>"address"}], "name"=>"getBalance", "outputs"=>[{"name"=>"", "type"=>"uint256"}], "payable"=>false, "type"=>"function"}, {"inputs"=>[], "type"=>"constructor"}, {"anonymous"=>false, "inputs"=>[{"indexed"=>false, "name"=>"account", "type"=>"address"}, {"indexed"=>false, "name"=>"amount", "type"=>"uint256"}], "name"=>"Issue", "type"=>"event"}, {"anonymous"=>false, "inputs"=>[{"indexed"=>false, "name"=>"from", "type"=>"address"}, {"indexed"=>false, "name"=>"to", "type"=>"address"}, {"indexed"=>false, "name"=>"amount", "type"=>"uint256"}], "name"=>"Transfer", "type"=>"event"}]);
+var TokenContract = web3.eth.contract([{"constant":false, "inputs":[{"name":"account", "type":"address"}, {"name":"amount", "type":"uint256"}], "name":"issue", "outputs":[], "payable":false, "type":"function"}, {"constant":false, "inputs":[{"name":"to", "type":"address"}, {"name":"amount", "type":"uint256"}], "name":"transfer", "outputs":[], "payable":false, "type":"function"}, {"constant":true, "inputs":[{"name":"account", "type":"address"}], "name":"getBalance", "outputs":[{"name":"", "type":"uint256"}], "payable":false, "type":"function"}, {"inputs":[], "type":"constructor"}, {"anonymous":false, "inputs":[{"indexed":false, "name":"account", "type":"address"}, {"indexed":false, "name":"amount", "type":"uint256"}], "name":"Issue", "type":"event"}, {"anonymous":false, "inputs":[{"indexed":false, "name":"from", "type":"address"}, {"indexed":false, "name":"to", "type":"address"}, {"indexed":false, "name":"amount", "type":"uint256"}], "name":"Transfer", "type":"event"}]);
 
-var Token = TokenContract.at('0x3a020580345e79e223580d8d6a50e063667f19b5');
+var Token = TokenContract.at('0x80d29fb7f81d2ccd77c708b6135389c9c08653dc');
 
 ```
 Deploy all contracts if no contract name provided.

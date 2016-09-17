@@ -8,15 +8,15 @@ scripts=""
 
 if [ -z "$1" ]
 then
+  echo "Testing all contracts on geth..."
   for file in `find ./gtests -name '*.js'`
   do
     scripts="${scripts};loadScript('$file');"
   done
-  echo "Testing all contracts on geth..."
 else
-  echo "Geth test $1"
-  let file="$1"
+  file=$1
   file="$(tr '[:lower:]' '[:upper:]' <<< ${file:0:1})${file:1}"
+  echo "Testing contract $file..."
   file+="_test.js"
   scripts="loadScript('gtests/$file');"
 fi

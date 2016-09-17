@@ -16,7 +16,7 @@ ALIASES = {
   "m"  => "migrate",
   "s"  => "server",
   "c"  => "console",
-  "gt" => "geth_test"
+  "gt" => "gtest"
 }
 
 command = ARGV.shift
@@ -160,7 +160,7 @@ def migrate
         abi = data[contract]["abi"]
         template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/migration")
         migration = template.result(binding)
-        f.write(migration)
+        f.write(migration.gsub("=>", ":"))
       end
       File.open("gtests/#{contract}_test.js", "w") do |f|
         f.write("loadScript('temp/migrations/#{contract}.js');")
@@ -173,7 +173,7 @@ def console
   system("./bin/attach.sh")
 end
 
-def geth_test
+def gtest
   name = ARGV.shift
   system("./bin/test.sh #{name}")
 end
