@@ -1,2 +1,7 @@
 #! /bin/bash
-geth --datadir `pwd`/data init genesis.json
+
+geth=${GETH:-geth}
+
+echo "***** Using geth at: $geth"
+
+$geth --datadir `pwd`/data init genesis.json

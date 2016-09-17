@@ -7,7 +7,7 @@ end
 
 def compile_solidity(file)
   json_string = `solc --add-std --optimize --combined-json abi,bin,userdoc,devdoc #{file}`
-  json_string = json_string.gsub("\n","")
+  json_string = json_string.gsub("\\n","")
   begin
     json_object = JSON.parse(json_string)
     throw if json_object.nil?
@@ -97,4 +97,8 @@ File.open(javascript_file_name, 'w') do |f|
   f.write("console.log('Compiled Object : #{compiled_variable_name}');")
   f.write("console.log('Contract : #{contract_variable_name}');")
   f.write("console.log('Contract Instance : #{contract_instance_variable_name}');")
+end
+
+File.open("temp/db/#{current_contract}.json", "w") do |f|
+  f.write(JSON.pretty_generate compiled_object)
 end

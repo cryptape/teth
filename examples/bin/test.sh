@@ -2,18 +2,25 @@
 
 geth=${GETH:-geth}
 
+echo "***** Using geth at: $geth"
+
 scripts=""
 
-for file in `find ./builds -name '*compiled.js'`
-do
-  scripts="${scripts};loadScript('$file')"
-done
+if [ -z "$1" ]
+then
+  for file in `find ./tests -name '*.js'`
+  do
+    scripts="${scripts};loadScript('$file');"
+  done
+  echo "Testing all contracts on geth..."
+else
+  echo "Geth test $1"
+  let file="$1"
+  file="$(tr '[:lower:]' '[:upper:]' <<< ${file:0:1})${file:1}"
+  file+="_test.js"
+  scripts="loadScript('tests/$file');"
+fi
 
-for file in `find ./test -name '*.js'`
-do
-  scripts="${scripts};loadScript('$file');"
-done
+$geth --exec "$scripts" attach ipc:data/geth.ipc
 
-echo $scripts
-$geth --datadir data --networkid 31415926 --rpc --rpccorsdomain "*" --nodiscover --unlock 3ae88fe370c39384fc16da2c9e768cf5d2495b48 --password <(echo -n 123456) --exec "$scripts" console 2>> ./logfile
-
+echo "Done."
