@@ -1,0 +1,1 @@
+loadScript('temp/migrations/Token.js');
