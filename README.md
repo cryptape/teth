@@ -460,6 +460,31 @@ Done.
 
 :beers:
 
+## Frequently Asked Questions
+
+#### Error: Account does not exist or account balance too low while `teth migrate token`
+This is just low balance for your accoutns. Just mining for a while will be ok.
+```shell
+$ teth c
+***** Using geth at: geth
+Starting geth attach...
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.4.11-stable-fed692f6/darwin/go1.7
+coinbase: 0x3ae88fe370c39384fc16da2c9e768cf5d2495b48
+at block: 3 (Sat, 17 Sep 2016 17:42:50 CST)
+ datadir: data
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+
+> miner.start()
+true
+> web3.eth.getBalance(web3.eth.accounts[0])
+506406250000000000000
+> 
+
+```
+
+
 ## TODO:
 
 - Add chai for js test
