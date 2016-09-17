@@ -100,5 +100,5 @@ File.open(javascript_file_name, 'w') do |f|
 end
 
 File.open("db/#{current_contract}.json", "w") do |f|
-  f.write(compiled_object.to_json)
+  f.write(JSON.pretty_generate compiled_object)
 end

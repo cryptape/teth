@@ -1,0 +1,3 @@
+var <%= contract %>Contract = web3.eth.contract(<%= abi %>);
+
+var <%= contract %> = <%=contract%>Contract.at('<%= address %>');

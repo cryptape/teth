@@ -55,7 +55,7 @@ def new
   name = ARGV.shift
   if name
     puts "Creating project #{name}..."
-    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir db && mkdir contracts && mkdir tests")
+    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir db && mkdir migrates && mkdir contracts && mkdir tests")
 
     gemfile = File.read("#{gem_dir}/lib/teth/erbs/Gemfile")
 
@@ -129,7 +129,29 @@ end
 
 def migrate
   name = ARGV.shift
-  system("./bin/migrate.sh #{name}")
+  output = `./bin/migrate.sh #{name}`
+  puts "output: #{output}"
+  contract = ""
+  output.split("\n").each do |o|
+    if o.match("Contract Instance")
+      contract = o.split("Contract Instance : ")[1]
+    end
+    if o.match("Contract mined!")
+      address = o.split("Address: ")[1]
+      data = File.read("db/#{contract}.json")
+      data = JSON.parse data
+      data["address"] = address
+      File.open("db/#{contract}.json", "w") do |f|
+        f.write(JSON.pretty_generate data)
+      end
+      File.open("migrates/#{contract}.js", "w") do |f|
+        abi = data[contract]["abi"]
+        template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/migration")
+        migration = template.result(binding)
+        f.write(migration)
+      end
+    end
+  end
 end
 
 def console
