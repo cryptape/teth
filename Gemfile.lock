@@ -14,7 +14,7 @@ PATH
 PATH
   remote: .
   specs:
-    teth (0.1.0)
+    teth (0.1.1)
       minitest (~> 5.8)
       ruby-ethereum (~> 0.9)
 
