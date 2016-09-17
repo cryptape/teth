@@ -3,7 +3,7 @@ PATH
   specs:
     teth (0.2.1)
       minitest (~> 5.8)
-      ruby-ethereum (>= 0.9.5)
+      ruby-ethereum (>= 0.9.6)
 
 GEM
   specs:
@@ -25,7 +25,7 @@ GEM
     minitest (5.8.4)
     multi_json (1.12.1)
     rlp (0.7.3)
-    ruby-ethereum (0.9.5)
+    ruby-ethereum (0.9.6)
       bitcoin-secp256k1 (~> 0.4)
       block_logger (~> 0.1)
       digest-sha3 (~> 1.1)

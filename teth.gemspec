@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["{lib}/**/*"] + ["LICENSE", "README.md"]
 
-  s.add_dependency('ruby-ethereum', '>= 0.9.5')
+  s.add_dependency('ruby-ethereum', '>= 0.9.6')
   s.add_dependency('minitest', '~> 5.8')
   s.executables << 'teth'
 end
