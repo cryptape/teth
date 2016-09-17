@@ -63,7 +63,7 @@ Done.
 
 $ cd examples
 ```
-Generate new Smart Contract and test files
+#### Generate new Smart Contract and test files
 ```shell
 $ teth g token
 Creating Token contract file...

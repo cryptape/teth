@@ -57,7 +57,7 @@ def new
   name = ARGV.shift
   if name
     puts "Creating project #{name}..."
-    dirs_commands = %w{ private_keys builds temp contracts tests}.map{ |d| "mkdir #{d}" }.join(" && ")
+    dirs_commands = %w{ private_keys builds temp contracts tests gtests}.map{ |d| "mkdir #{d}" }.join(" && ")
     system("mkdir #{name} && cd #{name} && #{dirs_commands}")
     system("cd #{name} && cd temp && mkdir db && mkdir migrations")
     gemfile = File.read("#{gem_dir}/lib/teth/erbs/Gemfile")
@@ -162,7 +162,7 @@ def migrate
         migration = template.result(binding)
         f.write(migration)
       end
-      File.open("tests/#{contract}_test.js", "w") do |f|
+      File.open("gtests/#{contract}_test.js", "w") do |f|
         f.write("loadScript('temp/migrations/#{contract}.js');")
       end
     end
