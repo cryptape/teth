@@ -55,8 +55,8 @@ def new
   name = ARGV.shift
   if name
     puts "Creating project #{name}..."
-    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir db && mkdir migrations && mkdir contracts && mkdir tests")
-
+    system("mkdir #{name} && cd #{name} && mkdir private_keys && mkdir builds && mkdir temp && mkdir contracts && mkdir tests")
+    system("cd #{name} && cd temp && mkdir db && mkdir migrations")
     gemfile = File.read("#{gem_dir}/lib/teth/erbs/Gemfile")
 
     File.open("#{name}/Gemfile", "w+") {|f| f.write(gemfile) }
@@ -138,20 +138,20 @@ def migrate
     end
     if o.match("Contract mined!")
       address = o.split("Address: ")[1]
-      data = File.read("db/#{contract}.json")
+      data = File.read("temp/db/#{contract}.json")
       data = JSON.parse data
       data["address"] = address
-      File.open("db/#{contract}.json", "w") do |f|
+      File.open("temp/db/#{contract}.json", "w") do |f|
         f.write(JSON.pretty_generate data)
       end
-      File.open("migrations/#{contract}.js", "w") do |f|
+      File.open("temp/migrations/#{contract}.js", "w") do |f|
         abi = data[contract]["abi"]
         template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/migration")
         migration = template.result(binding)
         f.write(migration)
       end
       File.open("tests/#{contract}_test.js", "w") do |f|
-        f.write("loadScript('migrations/#{contract}.js');")
+        f.write("loadScript('temp/migrations/#{contract}.js');")
       end
     end
   end
