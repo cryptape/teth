@@ -1,45 +1,17 @@
 require 'minitest/autorun'
 require 'ethereum'
 
+require 'teth/configurable'
+
 module Teth
   class Minitest < ::Minitest::Test
+    extend Configurable
     include Ethereum
 
-    class <<self
-      def contract_dir_name(set_val=nil)
-        if set_val.nil?
-          @contract_dir_name ||= 'contracts'
-        else
-          @contract_dir_name = set_val
-        end
-      end
-
-      def account_num(set_val=nil)
-        if set_val.nil?
-          @account_num ||= 10
-        else
-          @account_num = set_val
-        end
-      end
-
-      def print_events(set_val=nil)
-        if set_val.nil?
-          return false if @print_events.nil?
-          @print_events
-        else
-          @print_events = set_val
-        end
-      end
-
-      def print_logs(set_val=nil)
-        if set_val.nil?
-          return true if @print_logs.nil?
-          @print_logs
-        else
-          @print_logs = set_val
-        end
-      end
-    end
+    option :contract_dir_name, 'contracts'
+    option :account_num, 10
+    option :print_events, false
+    option :print_logs, true
 
     def setup
       path = find_contract_source
