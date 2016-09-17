@@ -3,6 +3,7 @@
 require 'erb'
 require 'json'
 require 'fileutils'
+require 'ethereum'
 
 ARGV << "--help" if ARGV.empty?
 
@@ -91,6 +92,16 @@ def generate
     puts "Creating #{name.capitalize} contract file..."
     contract_template = ERB.new File.read("#{gem_dir}/lib/teth/erbs/contract.sol")
     contract = contract_template.result(binding)
+
+    version = Ethereum::Tester::Language.get(:solidity).compiler_version
+    semver = version.split('-').first
+    major, minor, patch = semver.split('.')
+    unless major.to_i < 1 && minor.to_i < 4
+      pragma = "pragma solidity ^#{major}.#{minor}.0;" # always set patch to 0
+      contract = "#{pragma}\n\n#{contract}"
+    end
+
+    puts "Create #{name.capitalize}.sol contract file..."
     File.open("contracts/#{name.capitalize}.sol", "w+") { |f| f.write(contract) }
 
     puts "Creating #{name} test files..."
