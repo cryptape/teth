@@ -280,6 +280,7 @@ I0917 16:17:19.158064 p2p/nat/nat.go:111] mapped network port tcp:30303 -> 30303
 #### Migrate
 Deploy your contract on geth, must keep teth sever started.
 ```shell
+$ teth m
 Migrating contract token
 ***** Using geth at: geth
 null
