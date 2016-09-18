@@ -43,11 +43,11 @@ The most common teth commands are:
 All commands can be run with -h (or --help) for more information.
 EOF
 
-KEYS_TEMPLATE = {
-  "3ae88fe370c39384fc16da2c9e768cf5d2495b48" => "095e53c9c20e23fd01eaad953c01da9e9d3ed9bebcfed8e5b2c2fce94037d963",
-  "81063419f13cab5ac090cd8329d8fff9feead4a0" => "5bc505a123a695176a9688ffe22798cfd40424c5b91c818e985574ea8ebda167",
-  "9da26fc2e1d6ad9fdd46138906b0104ae68a65d8" => "b6a03207128827eaae0d31d97a7a6243de31f2baf99eabd764e33389ecf436fc"
-}
+KEYS_TEMPLATE = [
+  ["3ae88fe370c39384fc16da2c9e768cf5d2495b48", "095e53c9c20e23fd01eaad953c01da9e9d3ed9bebcfed8e5b2c2fce94037d963"],
+  ["81063419f13cab5ac090cd8329d8fff9feead4a0", "5bc505a123a695176a9688ffe22798cfd40424c5b91c818e985574ea8ebda167"],
+  ["9da26fc2e1d6ad9fdd46138906b0104ae68a65d8", "b6a03207128827eaae0d31d97a7a6243de31f2baf99eabd764e33389ecf436fc"]
+]
 
 def gem_dir
   spec = Gem::Specification.find_by_name("teth")
@@ -66,8 +66,8 @@ def new
     File.open("#{name}/Gemfile", "w+") {|f| f.write(gemfile) }
     system("cd #{name} && bundle install")
 
-    KEYS_TEMPLATE.each do |k, v|
-      File.open("#{name}/private_keys/#{k}.key", "w+") { |f| f.write(v) }
+    KEYS_TEMPLATE.each do |k|
+      File.open("#{name}/private_keys/#{k[0]}.key", "w+") { |f| f.write(k[1]) }
     end
 
     FileUtils.cp("#{gem_dir}/lib/teth/templates/private_keys/import.sh", "#{name}/private_keys/import.sh")
