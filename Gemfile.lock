@@ -1,9 +1,10 @@
 PATH
   remote: .
   specs:
-    teth (0.2.1)
+    teth (0.2.2)
       minitest (~> 5.8)
       ruby-ethereum (>= 0.9.6)
+      serpent (>= 0.3.0)
 
 GEM
   specs:
@@ -34,6 +35,7 @@ GEM
       leveldb (= 0.1.9)
       lru_redux (~> 1.1)
       rlp (= 0.7.3)
+    serpent (0.3.0)
 
 PLATFORMS
   ruby
