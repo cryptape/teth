@@ -30,7 +30,7 @@ module Teth
       when /\.sol\z/
         type = :solidity
       when /\.se\z/
-        raise NotImplemented, "Serpent not supported yet"
+        type = :serpent
       else
         raise "Unknown contract source type: #{path}"
       end
