@@ -100,6 +100,14 @@ module Teth
     end
 
     ##
+    # Helpers
+    #
+
+    def transfer(to, value, from: privkey)
+      state.send_tx from, to, value
+    end
+
+    ##
     # Fixtures
     #
 
