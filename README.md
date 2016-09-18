@@ -30,7 +30,7 @@ The most common teth commands are:
   migrate     Deploy contract on private chain (short-cut alias: "m")
   server      Start geth server (short-cut alias: "s")
   console     Start geth attach (short-cut alias: "c")
-  geth_test   Run your javascript tests on geth (short-cut alias: "gt")
+  gtest       Run your javascript tests on geth (short-cut alias: "gt")
 
 All commands can be run with -h (or --help) for more information.
 
@@ -70,7 +70,9 @@ Creating Token contract file...
 Creating token test files...
 Done.
 ```
-Edit token contract and test file
+This generates contract file `contracts/Token.sol`, and test files `tests/token_test.rb`, `gtests/Token_test.js`.
+
+Edit token contract and test file.
 
 `contracts/Token.sol`
 ```javascript
